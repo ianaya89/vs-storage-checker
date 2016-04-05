@@ -1,0 +1,20 @@
+{
+  "name": "vidispine",
+  "version": "1.0.0",
+  "description": "Vidispine console helper",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "vidispine",
+    "media",
+    "api",
+    "console"
+  ],
+  "author": "Ignacio Anaya <ignacio.anaya89@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "terminal-menu": "^2.1.1"
+  }
+}
