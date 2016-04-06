@@ -20,3 +20,7 @@ Node console app to check the status of your Vidispine storages.
     ```
 
   5. Run the application indicating the environment: `$ node app.js -e dev`
+
+<p style="text-align: center">
+  <img src="img/output.png" alt="output">
+</p>
