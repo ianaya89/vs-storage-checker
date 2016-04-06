@@ -4,7 +4,8 @@
   "description": "Vidispine console helper",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
   },
   "keywords": [
     "vidispine",
@@ -15,6 +16,9 @@
   "author": "Ignacio Anaya <ignacio.anaya89@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "terminal-menu": "^2.1.1"
+    "chalk": "^1.1.3",
+    "cli-table": "^0.3.1",
+    "commander": "^2.9.0",
+    "request-promise": "^2.0.1"
   }
 }

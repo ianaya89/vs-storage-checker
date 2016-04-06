@@ -1,26 +1,21 @@
-var Menu = require('terminal-menu');
-var menu = Menu({ width: 29, x: 4, y: 2 });
-menu.reset();
-menu.write('SERIOUS BUSINESS TERMINAL\n');
-menu.write('-------------------------\n');
- 
-menu.add('ADD TRANSACTION INVOICE');
-menu.add('BUSINESS INTELLIGENCE');
-menu.add('ACCOUNTS PAYABLE');
-menu.add('LEDGER BOOKINGS');
-menu.add('INDICATOR CHART METRICS');
-menu.add('BACKUP DATA TO FLOPPY DISK');
-menu.add('RESTORE FROM FLOPPY DISK');
-menu.add('EXIT');
- 
-menu.on('select', function (label) {
-    menu.close();
-    console.log('SELECTED: ' + label);
-});
-process.stdin.pipe(menu.createStream()).pipe(process.stdout);
- 
-process.stdin.setRawMode(true);
-menu.on('close', function () {
-    process.stdin.setRawMode(false);
-    process.stdin.end();
-});
+var chalk = require('chalk');
+var program = require('commander');
+var envs = require('./env');
+var vidispine = require('./vidispine');
+
+program
+.version('0.0.1')
+.option('-e, --environment [value]', 'Set the environment')
+.parse(process.argv);
+
+if (!program.environment) {
+  console.log(chalk.red('Missing --environment parametter.'));
+  return;
+}
+
+var env = envs[program.environment];
+
+console.log('The storages checker will run on this environment -> ' + chalk.green(env.host));
+
+vidispine.checkStorages(env);
+
