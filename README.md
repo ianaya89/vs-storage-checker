@@ -6,6 +6,7 @@ Node console app to check the status of your Vidispine storages.
   2. Open your terminal and locate the repo directory.
   3. Install node dependencies: `$ npm install`
   4. Open the `env.js` file and set up the environments:
+    
     `
       var envs = {
         dev: new Environment('host', 'username', 'password'),
@@ -14,4 +15,5 @@ Node console app to check the status of your Vidispine storages.
         prod: new Environment('host', 'username', 'password')
       };
     `
+    
   5. Run the application indicating the environment: `$ node app.js -e dev`
