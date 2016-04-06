@@ -1,6 +1,7 @@
 var rp = require('request-promise');
 var Table = require('cli-table');
 var chalk = require('chalk');
+var numeral = require('numeral');
 
 const STORAGE_URL = 'API/storage';
 const STORAGE_FILE_URL = 'file?count=true';
@@ -53,50 +54,51 @@ function getStorageFiles(storage) {
   options.url = `${env.host}/${STORAGE_URL}/${storage.id}/${STORAGE_FILE_URL}`;
   
   var method = getStorageMethod(storage);
-  var capacity = parseGb(storage.capacity);
-  var used = capacity - parseGb(storage.freeCapacity)
+  var capacity = numeral(storage.capacity).format('0.00 b');
+  var used = numeral(storage.capacity - storage.freeCapacity).format('0.000 b');
   
   rp(options)
   .then(function(res) {
-    var files = res.hits;
+    var files = numeral(res.hits).format('0,0');
 
     options.url =`${env.host}/${STORAGE_URL}/${storage.id}/${STORAGE_IMPORTABLE_URL}`,
 
     rp(options)
     .then(function(res) {
-      var importables = res.hits;
+      var importables = numeral(res.hits).format('0,0');
       table.push([storage.id, capacity, used, method.type, method.name, files, importables]);
 
       index++;
 
       if (index === limit) {
-       printResults();
        getTotals();
      }
    });
   });
 }
 
-function printResults() {
-  table.sort(function(a, b) {
-    return a > b;
-  });
-  console.log(table.toString());
-}
-
 function getTotals() {
-  globalOptions.url = `${env.host}/${STORAGE_URL}/${STORAGE_FILE_URL}`
+  globalOptions.url = `${env.host}/${STORAGE_URL}/${STORAGE_FILE_URL}`;
 
   rp(globalOptions)
   .then(function(res) {
-    console.log(chalk.green.bold(`Total Files: ${res.hits}`));
+    var files = numeral(res.hits).format('0,0');
     
-    globalOptions.url = `${env.host}/${STORAGE_URL}/${STORAGE_IMPORTABLE_URL}`
+    globalOptions.url = `${env.host}/${STORAGE_URL}/${STORAGE_IMPORTABLE_URL}`;
 
     rp(globalOptions)
     .then(function(res) {
-      console.log(chalk.green.bold(`Total Importable Files: ${res.hits}\n`));
-    })
+      var importables = numeral(res.hits).format('0,0');
+      
+      table.sort(function(a, b) {
+        return a > b;
+      });
+    
+      table.push(['', '', '', '', '', 'Total Importable', importables]);
+      table.push(['', '', '', '', '', 'Total Files', files]);
+      
+      console.log(table.toString());
+    });
 
   })
   .catch(function (err) {
@@ -116,8 +118,8 @@ function getStorageMethod(storage) {
   var url = storage.method[0].uri.toLowerCase();
   
   var name = url.split('=@')[1];
-  method.name = 'bucket-' + storage.id.split('-')[2];
-  //method.name = name.substring(0, name.length -1);
+  //method.name = 'bucket-' + storage.id.split('-')[2];
+  method.name = name.substring(0, name.length -1);
   
   if (url.indexOf('s3://') !== -1) {
     method.type = 'S3';
@@ -136,6 +138,5 @@ function parseGb(bytes) {
   var gb = bytes / 1073741824;
   return Math.round(gb, 2);
 }
-
 
 module.exports = vidispine;
