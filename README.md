@@ -1,5 +1,5 @@
 # Vidispine Storage Checker
-Node console app to check the status of your Vidispine storages.
+:tv: Node console app to check the status of your Vidispine storages.
 
 ## Pre requisites
   1. Node  >= v4.0.0
