@@ -22,7 +22,7 @@ var globalOptions = {
 };
 
 var table = new Table({
-  head: ['StorageId', 'Capacity (GB)', 'Used (GB)', 'Type', 'Name', 'Files', 'Importables'],
+  head: ['StorageId', 'Capacity', 'Used', 'Type', 'Name', 'Files', 'Importables'],
 });
 
 vidispine.checkStorages = function(environment) {
@@ -94,7 +94,7 @@ function getTotals() {
         return a > b;
       });
     
-      table.push(['', '', '', '', '', 'Total Importable', importables]);
+      table.push(['', '', '', '', '', 'Total Importables', importables]);
       table.push(['', '', '', '', '', 'Total Files', files]);
       
       console.log(table.toString());
