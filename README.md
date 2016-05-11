@@ -1,10 +1,10 @@
 # Vidispine Storage Checker
 :tv: Node console app to check the status of your Vidispine storages.
 
-## Pre requisites
-  1. [node.js](https://nodejs.org/en/)  >= v4.0.0
+### Pre requisites
+  * [node.js](https://nodejs.org/en/)  >= v4.0.0
 
-## Run it
+### Run it
   1. Clone this repo: `$ git clone https://github.com/ianaya89/vs-storage-checker.git` or download it.
   2. Open your terminal and locate the repo directory.
   3. Install node dependencies: `$ npm install`
